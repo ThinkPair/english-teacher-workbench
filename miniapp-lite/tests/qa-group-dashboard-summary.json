@@ -1,0 +1,30 @@
+{
+  "version": "0.4.0",
+  "runAt": "2026-10-06T08:13:08Z",
+  "syntheticOnly": true,
+  "runtimeMode": "mock",
+  "suite": "tests/qa-group-dashboard.cjs",
+  "command": "node --test tests/qa-group-dashboard.cjs",
+  "passed": 35,
+  "failed": 0,
+  "skipped": 0,
+  "durationMs": 222.4859,
+  "scope": ["comparison-model", "native-page-interactions", "category-pie", "group-lines"],
+  "staticReview": {"uniquePageBindings": 48, "missingHandlers": 0, "registeredNewCharts": 2, "individualScoreLineInstances": 1},
+  "annotationLeaderChecks": "real-endpoint-origin-and-correct-label; thin-leader-distinguished-from-data-lines; single-point-does-not-form-trend; close-label-order",
+  "officialSimulatorReview": "PASS-independent-final-screenshot-review",
+  "officialSimulatorStorageMode": "synthetic-mocked-storage",
+  "visualEvidence": [
+    "tests/wechat-simulator-0.4.0/08-twelve-students-focus.png",
+    "tests/wechat-simulator-0.4.0/10-final-home.png",
+    "tests/wechat-simulator-0.4.0/11-final-number-leaders.png",
+    "tests/wechat-simulator-0.4.0/12-final-focused-leader.png",
+    "tests/wechat-simulator-0.4.0/13-final-middle-120.png",
+    "tests/wechat-simulator-0.4.0/14-same-date-zero-full.png",
+    "tests/wechat-simulator-0.4.0/flow-result.json"
+  ],
+  "deviceVerified": false,
+  "uploaded": false,
+  "published": false,
+  "historicalReceiptsUnmodified": true
+}

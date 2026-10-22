@@ -1,0 +1,122 @@
+{
+  "version": "0.5.0",
+  "startedAt": "2026-10-06T08:55:30.295Z",
+  "complete": true,
+  "syntheticOnly": true,
+  "storage": "one in-memory fixture store; real storage APIs mocked before reLaunch",
+  "viewport": {
+    "windowWidth": 390,
+    "windowHeight": 753,
+    "pixelRatio": 3
+  },
+  "checks": [
+    "390宽首页实际图表与PNG图标存在，主按钮橙色、卡面暖白、标题深褐计算样式正确",
+    "四名示例曲线图例均保留，姓名正文存在且两行图例无内部纵向截断",
+    "分类管理及新分类表单实际打开，取消返回不改示例",
+    "真实表单保存一个虚构新学员，默认英语和当前分类正确，10份示例与原关联记录均未改变",
+    "真实记分表单保存82/100到新增虚构档案，其他示例成绩、标签和计划不变",
+    "既有示例的成绩、三类标签、计划、建议均由真实页签打开，浏览不改数据",
+    "备份与帮助真实打开并返回，版本0.5.0正确，暖色样式继续生效；未调用剪贴板或恢复功能",
+    "虚构长分类、长姓名仍可选中，完整姓名保留于焦点档案入口，截图供溢出与可读性复核",
+    "已有空库保留空状态和可用新增/示例入口，无伪造图表",
+    "最终回到含新增虚构学员的首页，主题与图表正常，本轮无运行异常"
+  ],
+  "screenshots": [
+    "01-home-warm-pie.png",
+    "02-complete-chart-and-names.png",
+    "03-category-management.png",
+    "04-new-category-form.png",
+    "05-new-student-form.png",
+    "06-new-score-form.png",
+    "07-new-student-score-saved.png",
+    "08-example-scores.png",
+    "09-example-tags.png",
+    "10-example-plans.png",
+    "11-example-suggestions.png",
+    "12-backup.png",
+    "13-help-top.png",
+    "14-help-bottom.png",
+    "15-long-category-home.png",
+    "16-long-student-focused.png",
+    "17-empty-archive.png",
+    "18-final-home.png"
+  ],
+  "styles": [
+    {
+      "step": "default-home",
+      "selector": ".brand-row .button-primary",
+      "property": "background-color",
+      "actual": "rgb(194, 83, 12)"
+    },
+    {
+      "step": "default-home",
+      "selector": ".composition-card",
+      "property": "background-color",
+      "actual": "rgb(255, 253, 249)"
+    },
+    {
+      "step": "default-home",
+      "selector": ".brand-title",
+      "property": "color",
+      "actual": "rgb(46, 33, 20)"
+    },
+    {
+      "step": "category-navigation",
+      "selector": ".form-card",
+      "property": "background-color",
+      "actual": "rgb(255, 253, 249)"
+    },
+    {
+      "step": "backup-help",
+      "selector": ".backup-card",
+      "property": "background-color",
+      "actual": "rgb(255, 253, 249)"
+    },
+    {
+      "step": "backup-help",
+      "selector": ".brand-row .button-primary",
+      "property": "background-color",
+      "actual": "rgb(194, 83, 12)"
+    },
+    {
+      "step": "backup-help",
+      "selector": ".composition-card",
+      "property": "background-color",
+      "actual": "rgb(255, 253, 249)"
+    },
+    {
+      "step": "final-home",
+      "selector": ".brand-row .button-primary",
+      "property": "background-color",
+      "actual": "rgb(194, 83, 12)"
+    }
+  ],
+  "icons": {
+    "pngVariants": 40,
+    "requiredVariants": 11
+  },
+  "errors": [],
+  "cleanup": [
+    {
+      "method": "getStorageInfoSync",
+      "restored": true
+    },
+    {
+      "method": "getStorageSync",
+      "restored": true
+    },
+    {
+      "method": "setStorageSync",
+      "restored": true
+    }
+  ],
+  "deviceVerified": false,
+  "uploaded": false,
+  "published": false,
+  "longCategoryLayout": {
+    "viewportBottom": 263.8860092163086,
+    "lastValueBottom": 257.5757465362549,
+    "requestedRpx": 294
+  },
+  "finishedAt": "2026-10-06T08:56:33.181Z"
+}

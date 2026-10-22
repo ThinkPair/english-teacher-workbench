@@ -1,0 +1,5 @@
+<view class="pie-wrap" style="height:{{renderHeight}}px;">
+  <canvas type="2d" id="pie" class="paint-canvas" style="height:{{renderHeight}}px;" aria-hidden="true"></canvas>
+  <image wx:if="{{chartImage}}" class="chart-image" src="{{chartImage}}" mode="scaleToFill" style="height:{{renderHeight}}px;" data-paint="{{renderPaintId}}" binderror="_onImageError" aria-label="各分类学员档案数量饼图" />
+  <view wx:else class="chart-message"><text>{{chartFailed ? '分类图暂未显示' : chartBusy ? '正在绘制分类' : '还没有学员档案'}}</text><text class="message-sub">{{chartFailed ? '档案保留，可查看旁边的分类数量' : chartBusy ? '' : '添加学员后查看分类分布'}}</text></view>
+</view>

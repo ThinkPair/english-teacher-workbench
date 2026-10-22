@@ -1,0 +1,20 @@
+.help-shell { max-width: 1000rpx; padding: 40rpx 32rpx calc(48rpx + env(safe-area-inset-bottom)); margin: 0 auto; box-sizing: border-box; }
+page { background: #F6F7F9; color: #303642; }
+.help-eyebrow { display: block; font-size: 24rpx; color: #737C89; letter-spacing: 2rpx; margin-bottom: 16rpx; line-height: 1.6; }
+.help-title { display: block; font-size: 44rpx; font-weight: 650; white-space: pre-line; line-height: 1.45; color: #202631; }
+.help-intro { display: block; font-size: 28rpx; color: #303642; line-height: 1.85; margin: 24rpx 0 32rpx; }
+.help-error { padding: 24rpx; border: 1rpx solid #D8A697; border-radius: 16rpx; background: #F8EDE7; color: #AD4535; font-size: 28rpx; line-height: 1.75; margin-bottom: 24rpx; }
+.help-card { background: #FFFFFF; border: 1rpx solid #E9ECF1; border-radius: 24rpx; margin: 24rpx 0; padding: 32rpx; box-shadow: none; }
+.help-card.first-card { border-top: 4rpx solid #CB4A20; }
+.help-number { display: flex; justify-content: center; align-items: center; width: 48rpx; height: 48rpx; border-radius: 16rpx; background: #F3F5F8; color: #CB4A20; font-size: 24rpx; font-weight: 600; margin-bottom: 16rpx; }
+.help-heading { display: block; color: #202631; font-size: 32rpx; font-weight: 600; line-height: 1.6; overflow-wrap: break-word; }
+.help-body { display: block; color: #303642; font-size: 28rpx; line-height: 1.85; margin-top: 20rpx; overflow-wrap: break-word; }
+.help-steps { display: flex; flex-direction: column; gap: 24rpx; margin-top: 24rpx; font-size: 28rpx; color: #303642; line-height: 1.85; }
+.help-callout { font-size: 26rpx; color: #303642; background: #F3F5F8; border: 1rpx solid #E9ECF1; border-radius: 16rpx; padding: 24rpx; margin-top: 24rpx; line-height: 1.85; overflow-wrap: break-word; }
+.help-tag-row { display: flex; align-items: center; flex-wrap: wrap; gap: 12rpx; color: #737C89; font-size: 24rpx; line-height: 1.65; margin-top: 20rpx; }
+.help-tag { display: inline-block; font-size: 24rpx; font-weight: 600; color: #303642; background: #F3F5F8; border: 1rpx solid #E9ECF1; padding: 8rpx 14rpx; border-radius: 12rpx; }
+.help-footer { display: block; color: #737C89; font-size: 24rpx; line-height: 1.85; margin: 28rpx 4rpx; }
+.help-back { width: 100%; min-height: 88rpx; padding: 24rpx; font-size: 28rpx; font-weight: 600; line-height: 1.5; color: #FFFFFF; background: #CB4A20; border: 1rpx solid #CB4A20; border-radius: 16rpx; }
+.help-back::after { border: 0; }
+/* Keep native v2 button dimensions from shrinking or centering the main action. */
+.help-shell button.help-back { width: 100%; min-width: 0; max-width: 100%; margin: 0; box-sizing: border-box; }

@@ -1,0 +1,6 @@
+<view class="line-wrap" style="height:{{height}}px;">
+  <canvas wx:if="{{points.length}}" type="2d" id="line" class="line-canvas" style="height:{{height}}px;" aria-hidden="true"></canvas>
+  <image wx:if="{{points.length && chartImage}}" class="chart-image" src="{{chartImage}}" mode="scaleToFill" style="height:{{height}}px;" aria-label="最近成绩得分率折线" />
+  <view wx:elif="{{points.length}}" class="chart-empty"><text>{{chartFailed ? '折线暂未显示' : '正在绘制成绩'}}</text><text wx:if="{{chartFailed}}" class="empty-sub">记录保留，进入档案查看成绩</text></view>
+  <view wx:else class="chart-empty"><text>{{emptyTitle}}</text><text class="empty-sub">{{emptyHint}}</text></view>
+</view>

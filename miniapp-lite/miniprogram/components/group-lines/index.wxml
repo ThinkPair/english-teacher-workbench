@@ -1,0 +1,5 @@
+<view class="lines-wrap" style="height:{{renderHeight}}px;">
+  <canvas type="2d" id="groupLines" class="paint-canvas" style="height:{{renderHeight}}px;" aria-hidden="true"></canvas>
+  <image wx:if="{{chartImage}}" class="chart-image" src="{{chartImage}}" mode="scaleToFill" style="height:{{renderHeight}}px;" data-paint="{{renderPaintId}}" binderror="_onImageError" aria-label="本分类全部学员同日期坐标成绩折线" />
+  <view wx:else class="chart-message"><text>{{chartFailed ? '成绩图暂未显示' : chartBusy ? '正在绘制学员成绩' : '暂无可展示的成绩'}}</text><text class="message-sub">{{chartFailed ? '记录仍保留，可进入学员档案查看' : chartBusy ? '' : '已有记录请核对学科与日期；没有成绩的学员不会补为零分'}}</text></view>
+</view>

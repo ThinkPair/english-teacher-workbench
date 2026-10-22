@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "学员手记",
+  "disableScroll": false,
+  "usingComponents": {
+    "score-line": "/components/score-line/index",
+    "category-pie": "/components/category-pie/index",
+    "group-lines": "/components/group-lines/index"
+  }
+}

@@ -1,0 +1,27 @@
+<view class="help-shell">
+  <text class="help-eyebrow">学员手记 · 使用与数据说明</text>
+  <text class="help-title">从一份档案，
+开始有据可循的跟进。</text>
+  <text class="help-intro">当前先专注英语班主任的教学记录，覆盖小学、初中和高中。整理学员的英语成绩、知识点与学习习惯，留下可回看的跟进。每位老师在自己的设备上独立使用，不提供团队共同维护或自动同步。</text>
+  <view wx:if="{{error}}" class="help-error">{{error}}</view>
+
+  <view class="help-card first-card"><view class="help-number">01</view><text class="help-heading">首次使用：先按教学习惯设置分类</text><view class="help-steps"><text>① 首页点“分类设置”，可新增或修改学员分类，并设置各分类的默认满分；例如小学英语 100 分、初中英语 120 分、高中英语 150 分。名称和满分都由你决定，也可按课程或教学分组设置。</text><text>② 选择分类后点“新增学员”，会预选当前分类。填写称呼和年级，学科固定为英语。推荐用代号或昵称；具体年级由你填写。暂不分类也可以保存，以后编辑档案再选择。</text><text>③ 保存新学员后直接进入档案，可以记第一条成绩、留观察标签，再把建议调整为跟进计划。</text></view><view class="help-callout">首次新建的档案库带有 10 份虚构示例，放在同一个档案库中：小学英语 4 份、初中英语 3 份、高中英语 3 份。示例可以像其他档案一样直接编辑、调整分类或删除，删除后不会自动补回。小“示例”标记帮助辨认示例来源。预置分类和满分只是示意，不限制学段、课程或你可以创建的分类。</view><text class="help-body">首页统计的是档案份数，不代表去重后的实际人数。已有旧版档案时保留其记录，不自动补入示例；即使旧档案库是空的，升级也不会擅自填入。没有分类信息的旧档案进入“未分类”，不会猜测。已有或导入的其他学科记录也继续保留，供查看和整理。</text><view class="help-callout">如果首页没看到示例，回到首页，点击分类卡下方的“添加 10 个示例学员”。它会把示例加入当前档案库，保留原有档案与成绩；已有示例时不会重复提供入口。全部删除后可以主动再添加，重新打开小程序不会自动补回。</view></view>
+
+  <view class="help-card"><view class="help-number">02</view><text class="help-heading">成绩：同一类学员放在一起看</text><text class="help-body">填写考试或测评名称、日期、得分与满分。新成绩自动沿用档案学科，正常英语档案无需重复填写。满分带入学员所属分类的默认值，每次仍可按试卷修改；未分类时先填入 100，并明确提示可改。首页用饼图展示各分类占全部档案的比例，点旁边分类名称选择。下方一张折线图展示本类同科学员，每人一条线，各取最近六次已发生的成绩，并按真实日期对齐。所有入图记录满分一致时直接显示分数；历史满分不一致时自动换算得分率，并提示原因。没有成绩的学员保留在图例中，不补零分。点姓名突出该学员曲线，其他曲线仍保留；再次点击或点“取消突出”恢复。个人档案内仍可查看自己的成绩与图表。修改分类默认满分只影响以后新建的成绩，移动学员分类也不会重写历史成绩；编辑旧成绩时保留其原满分，除非你主动改动。</text><text class="help-body">旧版档案若缺少年级或学科，会显示待填写、待整理。系统不会猜测；旧版多科记录仍保留在详情列表。请先导出备份，再按原记录核对和整理，最后补全档案学科；不要把其他学科记录直接改成英语。同一分类内若有多个学科，首页可选择学科分别比较；学科待整理的档案暂不进入全类对比图，但记录仍可在个人档案中查看。</text><view class="help-callout">得分率是得分除以满分。同一科目的试卷也可能难度不同，折线只是记录的排列，不能自动证明能力提升、知识掌握或某种教学方法有效。</view></view>
+
+  <view class="help-card"><view class="help-number">03</view><text class="help-heading">标签：保留具体观察与依据</text><view class="help-tag-row"><text class="help-tag amber">薄弱知识点</text><text>还需要练习的具体内容</text></view><view class="help-tag-row"><text class="help-tag green">强项知识点</text><text>可以继续发挥的表现</text></view><view class="help-tag-row"><text class="help-tag purple">学习习惯</text><text>课堂或练习中的行为观察</text></view><text class="help-body">英语知识点默认沿用档案学科，学习习惯可选择“通用”，无需反复手填学科。成绩列表中的“记录这次观察”会打开标签草稿，带入这次考试名称、日期与得分作为参考，你仍需填写具体标签并核对观察依据。快捷标签只帮助填写，可以修改，不会自动判断学员的问题。不同学段请以这位学员已经学习的材料和实际表现为依据，建议补上观察日期与具体依据。</text><text class="help-body">同一档案、同一科目的同一知识点，不能同时作为当前薄弱与强项。情况变化时，可编辑或解除旧标签；解除保留历史记录，也可以恢复。</text><view class="help-callout">标签由老师判断。解除标签不等于系统判定“已经掌握”。</view></view>
+
+  <view class="help-card"><view class="help-number">04</view><text class="help-heading">建议与计划：先看依据，再做调整</text><text class="help-body">“建议”按设备上的已有记录与固定规则整理，不接云端 AI，也不作自动诊断。成绩依据按同一科目整理，不把跨科分数当成连续变化。</text><text class="help-body">每条建议都有依据。点击“编辑为跟进计划”，改成适合这份档案的一件小事，再保存；只浏览建议不会自动建计划。如果同一学员已有标题和依据完全相同的待跟进计划，入口会优先打开原计划继续编辑。</text><text class="help-body">计划保留保存当时的依据。以后删除或修改原成绩、标签，这份历史依据不会自动更新；再次跟进时请核对现状。</text></view>
+
+  <view class="help-card"><view class="help-number">05</view><text class="help-heading">日常跟进：选分类，再筛待办</text><text class="help-body">首页选择一个分类，再点“本类待跟进”，只显示该分类仍有未完成计划的档案。搜索也在当前分类内生效。这两个条件只筛选下方档案名册，上方饼图保持全库、折线图保持本类全部同科学员，不随名册筛选减少曲线。点待跟进档案会直接打开计划。</text><text class="help-body">完成后写下做了什么、观察到什么，再保存完成记录。需要继续时可以重新跟进；“已完成”表示这项计划已执行，不代表知识点已掌握。完成后也可点“记录一次复测”，打开一条未保存的成绩草稿，满分按当前分类带入、得分留空；要由老师实际测评后填写，不会自动记分或解除标签。</text><view class="help-callout">跟进日期只帮助本地整理，不会发送微信提醒。工作室或机构的其他老师不会自动看到你的记录。</view></view>
+
+  <view class="help-card"><view class="help-number">06</view><text class="help-heading">本地保存：换设备前先备份</text><text class="help-body">本工具不要求账号登录，不主动把档案上传到服务器，不提供云同步或团队同步。记录保存在当前设备的小程序本地空间。</text><text class="help-body">换设备、清理微信数据、移除小程序或系统回收，都可能使本地记录丢失。本地保存也不等于加密保护，请保护好设备与微信使用权限。</text><text class="help-body">容量有限。保存失败时，已有记录不会被覆盖，未保存表单会保留；请先保留填写内容，再检查存储或导出备份。档案无法打开时不会自动重置，可在恢复页先保留原内容。</text><view class="help-callout">只填写教学所需信息。推荐使用学员代号，避免录入身份证、住址、家庭详情等无关信息。使用学员资料前，请确认自己具备相应权限。</view></view>
+
+  <view class="help-card"><view class="help-number">07</view><text class="help-heading">备份与恢复：完整保留，确认替换</text><text class="help-body">在“备份”里复制完整档案。复制前会请求确认，因为备份包含全部分类、学员档案、成绩、标签和计划，示例也包括在内。</text><text class="help-body">把复制的内容粘贴到可信的私人文件中，并注明日期。剪贴板不是持久备份，其他应用或设备同步功能也可能接触剪贴板；保存后可复制一段普通文字替换。</text><text class="help-body">恢复时，粘贴完整备份，先检查数量，再确认替换。恢复会完整替换本机档案，不自动合并。建议先导出原档；请核对备份中哪些是示例，哪些是需要保留的实际记录。</text><view class="help-callout">旧版“示例空间”不会自动合并到现在的档案库。若本机仍有旧示例记录，备份页会显示“复制旧版示例记录”，可先单独留存。复制原内容不代表它已被验证为可恢复备份。旧版原记录不会因这次升级被删除。</view></view>
+
+  <view class="help-card"><view class="help-number">08</view><text class="help-heading">删除与修改：按记录处理</text><text class="help-body">分类名称和默认满分可编辑；只有没有学员的分类才能删除。分类中还有学员时，先编辑学员，把他们移到其他分类或未分类。成绩、标签、计划都可单独编辑或删除。删除一份学员档案，会同时删除该档案的成绩、标签和计划；确认框会说明数量，不影响其他档案。</text><text class="help-body">删除后没有自动回收站。需要保留历史时，请先导出私人备份；恢复备份仍会完整替换本机档案，请先保存现有最新记录。</text><text class="help-body">表单未保存时返回，会先询问是否放弃。打开本帮助页不会清除当前表单，返回后可以继续填写。</text></view>
+
+  <text class="help-footer">请仅记录教学所需的信息，按实际情况维护和备份。</text>
+  <button class="help-back" bindtap="onBack">返回手记，继续记录</button>
+  <text class="help-footer">版本 0.6.0</text>
+</view>

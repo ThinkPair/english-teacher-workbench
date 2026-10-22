@@ -1,0 +1,11 @@
+export type Workspace = 'demo' | 'personal';
+export interface Student { id:string; name:string; grade:string; school:string; notes:string; target_score:number|null; created_at:string; exam_count?:number; latest_score?:number|null; latest_full_score?:number|null; latest_exam_date?:string|null; pending_count?:number; weak_tags?:string[]; exams?:ExamSummary[]; plans?:Plan[]; weak_points?:{tag:string;count:number;evidence:string[]}[]; summary?:string }
+export interface Question { id:string; number:string; stem:string; student_answer:string; correct_answer:string; school_score:number|null; max_score:number; ai_score:number|null; knowledge_tag:string; error_reason:string; teacher_note:string; needs_review:boolean; reviewed:boolean; source_page:number; source_attachment_id:string|null }
+export interface Attachment { id:string; filename:string; mime:string; size:number; url:string; page_urls:string[] }
+export interface ExamSummary { id:string; student_id:string; title:string; exam_date:string; kind:'school'|'practice'; full_score:number; school_score:number|null; notes:string; status:'draft'|'review'|'confirmed'; revision:number; created_at:string; question_count?:number; pending_count?:number }
+export interface QuestionSource { document_title:string; source_page:number; source_end_page:number; url:string }
+export interface Exam extends ExamSummary { questions:Question[]; attachments:Attachment[]; question_sources?:Record<string,QuestionSource> }
+export interface Plan { id:string; student_id:string; exam_id:string|null; title:string; content:string; source:'ai'|'teacher'; source_revision:number|null; stale:boolean; created_at:string; lesson_note:string; review_date:string|null; review_result:string }
+export interface Bootstrap {workspace:Workspace;students:Student[];stats:{students:number;confirmed_exams:number;pending_exams:number;plans:number};ai:{configured:boolean;model:string;vision_model:string};recent_exams:ExamSummary[]}
+export interface Settings {base_url:string;model:string;vision_model:string;has_api_key:boolean;timeout_seconds:number}
+export interface Job {id:string;status:'queued'|'running'|'succeeded'|'failed';kind:'recognize'|'plan';message:string;result:unknown}

@@ -1,0 +1,41 @@
+{
+  "at": "2026-10-06T07:02:43.725Z",
+  "checks": [
+    "同库10个可编辑示例，3个分类和默认满分正确",
+    "选择教学分类只显示对应学员",
+    "自定义分类校验满分，保存后直达该空分类",
+    "当前分类建档自动归组，英语固定，保存后进入本人详情",
+    "新成绩带类别满分，超分拒绝，正确保存64/80",
+    "从成绩记录观察，自动带入本次考试依据且需要老师保存",
+    "分类有学员时不能误删",
+    "改分类名与默认满分，旧成绩80保留，新成绩才用100",
+    "转分类保留历史，下一条成绩自动带新分类120",
+    "学员移出后可删除空分类",
+    "英语观察生成教师可编辑计划，相同待跟进建议复用原计划",
+    "跟进保存实际完成结果，不生成成绩或自动解除标签",
+    "完成后复测从空得分开始，沿用当前分类满分",
+    "首页按各次原始满分绘制得分率并显示考试名与日期",
+    "预放示例与普通学员一样可以修改和删除",
+    "帮助说明独立，返回仍保留未保存草稿",
+    "重进保留测试夹具中的分类、档案和修改",
+    "底部档案、备份、帮助三个入口实际触控正常",
+    "已有空库不重复注入10名示例，分类保留",
+    "最终导航与空库原生运行无异常"
+  ],
+  "errors": [],
+  "storageMode": "WeChat automator in-memory synthetic fixture; real storage APIs mocked",
+  "realDataAccessed": false,
+  "segments": [
+    {
+      "name": "category workflow",
+      "checks": 17,
+      "note": "Workflow assertions passed; navigation transport timeout then tested separately after regular-view navigation fix."
+    },
+    {
+      "name": "navigation and empty archive",
+      "checks": 3,
+      "at": "2026-10-06T07:02:43.725Z"
+    }
+  ],
+  "complete": true
+}

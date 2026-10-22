@@ -1,0 +1,6 @@
+:host { display: block; width: 100%; }
+.lines-wrap { position: relative; width: 100%; overflow: hidden; }
+.paint-canvas { position: absolute; left: -10000px; top: 0; display: block; width: 100%; }
+.chart-image { display: block; width: 100%; }
+.chart-message { height: 100%; padding: 24px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #303642; font-size: 13px; line-height: 1.7; border-bottom: 1px dashed #E9ECF1; }
+.message-sub { display: block; margin-top: 7px; color: #737C89; font-size: 12px; }

@@ -1,0 +1,15 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/help/help"
+  ],
+  "window": {
+    "navigationBarTitleText": "学员手记",
+    "navigationBarBackgroundColor": "#F6F7F9",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F6F7F9",
+    "backgroundTextStyle": "dark"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

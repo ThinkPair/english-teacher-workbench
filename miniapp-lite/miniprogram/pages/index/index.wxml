@@ -1,0 +1,201 @@
+<view class="app-shell">
+  <view class="brand-row">
+    <view class="brand"><view><text class="brand-title">{{view === 'list' ? '我的学员' : '学员手记'}}</text><text class="brand-sub">{{view === 'list' ? '英语 · ' + totals.records + ' 份档案' : '英语教学工作台'}}</text></view></view>
+    <button wx:if="{{view === 'list'}}" class="button-primary compact icon-action" bindtap="onAddStudent"><image class="action-icon" src="{{icons.plus.white}}" /><text>新增学员</text></button>
+    <button wx:else class="help-link" bindtap="onHelp">使用帮助 ›</button>
+  </view>
+
+  <view wx:if="{{error}}" class="message error-message"><text selectable="{{true}}">{{error}}</text></view>
+  <view wx:if="{{notice}}" class="message success-message"><text>{{notice}}</text></view>
+
+  <block wx:if="{{view === 'list'}}">
+    <view class="composition-card">
+      <view class="composition-heading"><text class="composition-kicker">学员分类</text><button class="composition-manage" bindtap="onManageCategories"><image src="{{icons.adjustmentsHorizontal.accent}}" /><text>分类设置</text></button></view>
+      <view class="composition-body">
+        <view class="composition-pie"><category-pie id="categoryPie" slices="{{groups}}" selected-key="{{groupKey}}" height="{{104}}" /></view>
+        <scroll-view scroll-y="{{true}}" class="composition-legend" style="height:{{compositionLegendHeight}}rpx;" enhanced="{{true}}" show-scrollbar="{{groups.length > 3}}">
+          <button wx:for="{{groups}}" wx:key="key" class="composition-group {{groupKey === item.key ? 'group-selected' : ''}}" data-key="{{item.key}}" bindtap="onSelectGroup" hover-class="group-hover">
+            <view class="category-legend-title"><view class="category-dot" style="background:{{item.color}};"></view><text class="group-label category-tile-name">{{item.name || item.label}}</text></view>
+            <view class="category-legend-values"><text class="group-count">{{item.count}} 份</text><text>{{item.ratio}}%</text></view><image class="category-selected-icon {{groupKey === item.key ? 'category-is-selected' : ''}}" src="{{icons.check.accent}}" />
+          </button>
+        </scroll-view>
+      </view>
+      <text wx:if="{{totals.examples}}" class="composition-example">{{totals.examples}} 份虚构示例 · 可编辑删除</text>
+      <text wx:if="{{!totals.records}}" class="composition-example">可先管理分类，再开始建档</text>
+    </view>
+    <view wx:if="{{totals.examples === 0 && !blocked}}" class="example-entry"><button class="add-examples-button" loading="{{addingExamples}}" disabled="{{addingExamples}}" bindtap="onAddExamples">添加 10 个示例学员</button><text>虚构资料，可编辑或删除</text></view>
+    <view wx:if="{{selectedGroup.count}}" class="group-comparison-card">
+      <view class="comparison-heading"><view><text class="comparison-title">{{selectedGroup.label}} · 成绩走势</text><text class="section-caption">本类 {{comparison.recordCount}} 份档案 · 每人最近 6 次</text></view><text class="comparison-unit">{{comparison.mode === 'rate' ? '得分率 %' : '满分 ' + comparison.max}}</text></view>
+      <view wx:if="{{comparison.subjectOptions.length > 1}}" class="comparison-subject"><text>按学科分别比较</text><picker range="{{comparisonSubjectNames}}" value="{{comparisonSubjectIndex}}" bindchange="onComparisonSubject"><view class="comparison-subject-picker">{{comparisonSubjectNames[comparisonSubjectIndex]}} ›</view></picker></view>
+      <text wx:if="{{comparison.mixedTotals}}" class="comparison-notice">历史满分不一致，已按各次满分换算得分率。</text>
+      <group-lines id="groupLinesChart" series="{{comparison.series}}" max="{{comparison.max}}" unit="{{comparison.unit}}" focus-id="{{comparisonFocusId}}" height="{{170}}" />
+      <view class="comparison-legend-heading"><text>{{comparison.subjectLabel || '学科待整理'}} · {{comparison.plottedCount}} 份有成绩</text><text>点姓名突出曲线</text></view>
+      <scroll-view wx:if="{{comparison.series.length}}" class="series-legend-scroll" style="height:{{comparisonLegendHeight}}rpx;" scroll-y="{{true}}" enhanced="{{true}}" show-scrollbar="{{true}}">
+        <view class="series-legend">
+          <button wx:for="{{comparison.series}}" wx:key="id" class="series-legend-item {{comparisonFocusId === item.id ? 'series-focused' : ''}}" data-id="{{item.id}}" bindtap="onFocusSeries">
+            <view class="series-label"><view class="series-line-key" style="border-color:{{item.color}};border-top-style:{{item.dash.length ? 'dashed' : 'solid'}};"></view><text class="series-number">{{item.number}}</text><text class="series-name">{{item.name}}</text></view>
+            <text class="series-latest">{{item.latestText}}</text>
+          </button>
+        </view>
+      </scroll-view>
+      <view wx:if="{{comparisonFocus}}" class="comparison-focus-panel"><view><text>{{comparisonFocus.name}}</text><text class="muted small">{{comparisonFocus.grade}} · {{comparisonFocus.latestText}}</text></view><button class="text-button" bindtap="onOpenComparisonStudent">打开档案 ›</button><button class="text-button" bindtap="onClearSeriesFocus">取消突出</button></view>
+      <text wx:if="{{comparison.unknownCount}}" class="comparison-footnote">{{comparison.unknownCount}} 份档案学科待整理，暂未入图。</text>
+      <text class="comparison-footnote">按实际日期对齐；缺少成绩不记零分。不同试卷难度可能不同。</text>
+    </view>
+    <view wx:if="{{selectedGroup}}" class="section-title group-section-title"><view><text>学员档案</text><text class="section-caption">{{selectedGroup.label}} · {{selectedGroup.total ? '新成绩默认满分 ' + selectedGroup.total : '未设默认满分'}}</text></view><text class="muted small">{{rows.length}} / {{selectedGroup.count}} 份</text></view>
+    <view wx:if="{{totals.records}}" class="list-filters"><button class="filter-chip {{listFilter === 'all' ? 'filter-active' : ''}}" data-filter="all" bindtap="onListFilter">本类全部</button><button class="filter-chip {{listFilter === 'todo' ? 'filter-active' : ''}}" data-filter="todo" bindtap="onListFilter">本类待跟进</button></view>
+    <text wx:if="{{query || listFilter === 'todo'}}" class="roster-filter-hint">仅筛选下方档案，上方图表仍显示本类全部。</text>
+    <view wx:if="{{totals.records}}" class="search-box"><image class="search-icon" src="{{icons.search.muted}}" /><input value="{{query}}" placeholder="在当前分类内搜索学员称呼" placeholder-class="placeholder" bindinput="onSearch" maxlength="100" confirm-type="search" /></view>
+    <view wx:if="{{emptyCategory}}" class="empty-card"><view class="empty-symbol"><image src="{{icons.users.accent}}" /></view><text class="empty-title">这个分类还没有学员</text><text class="empty-text">新建学员会预选“{{selectedGroup.name || selectedGroup.label}}”，记成绩时自动带入默认满分。</text><button class="button-primary" bindtap="onAddStudent">新增学员</button></view>
+    <view wx:elif="{{!totals.records}}" class="empty-card"><view class="empty-symbol"><image src="{{icons.users.accent}}" /></view><text class="empty-title">建立第一份学员档案</text><text class="empty-text">先设置分类和默认满分，或直接建档后再分类。</text><button class="button-primary" bindtap="onAddStudent">建立学员档案</button><button class="text-button" bindtap="onManageCategories">先设置学员分类</button></view>
+    <view wx:elif="{{!rows.length}}" class="empty-card"><text class="empty-title">{{listFilter === 'todo' ? '当前分类没有匹配的待跟进档案' : '当前分类没有匹配的档案'}}</text><text class="empty-text">可清除搜索词，或在上方选择其他分类。</text><button wx:if="{{listFilter === 'todo'}}" class="button-quiet" data-filter="all" bindtap="onListFilter">查看本类全部</button></view>
+    <view wx:else class="student-list">
+      <view wx:for="{{rows}}" wx:key="id" class="student-card roster-student-card" data-id="{{item.id}}" bindtap="onOpenStudent" hover-class="student-card-hover">
+        <view class="student-card-head"><view class="avatar">{{item.initial}}</view><view class="student-main"><view class="student-name-row"><text class="student-name">{{item.name}}</text><text wx:if="{{item.isExample}}" class="example-badge">示例</text></view><text class="muted small">{{item.grade}} · {{item.subject}}</text></view><image class="row-arrow" src="{{icons.chevronRight.muted}}" /></view>
+        <view class="roster-student-foot"><text>最近成绩 {{item.latestText}}</text><text wx:if="{{item.todo}}" class="todo-pill">{{item.todo}} 项待跟进</text><text wx:else>{{item.scoreCount}} 条成绩记录</text></view>
+      </view>
+    </view>
+    <view class="footer-note">英语成绩与观察 · 图表不代表掌握程度</view>
+  </block>
+
+  <block wx:if="{{view === 'categories'}}">
+    <button class="back-button" bindtap="onHome"><image src="{{icons.chevronLeft.muted}}" />返回学员档案</button>
+    <view class="section-title"><view><text class="page-title category-page-title">管理学员分类</text><text class="section-caption">按自己的教学安排命名，设置常用满分</text></view><button class="button-primary compact icon-action" bindtap="onAddCategory"><image class="action-icon" src="{{icons.plus.white}}" /><text>新分类</text></button></view>
+    <view class="category-intro">分类名称和默认满分都可修改。默认满分只带入以后新增的成绩，已经记录的分数和满分保持不变。</view>
+    <view wx:if="{{!categories.length}}" class="empty-card"><text class="empty-title">从一个常用分类开始</text><text class="empty-text">例如“小学英语”“初中英语”，也可以按课程或自己的教学分组命名。</text><button class="button-primary" bindtap="onAddCategory">新增第一个分类</button></view>
+    <view wx:for="{{categories}}" wx:key="id" class="card category-card"><view class="record-top"><view class="grow"><text class="card-title">{{item.name}}</text><text class="muted small">{{item.studentCount}} 份学员档案</text></view><view class="category-total"><text>{{item.total}}</text><text class="small muted">默认满分</text></view></view><view class="record-actions category-actions"><button class="text-button" data-id="{{item.id}}" bindtap="onViewCategory">{{item.studentCount ? '查看学员' : '去添加学员'}}</button><button class="text-button" data-id="{{item.id}}" bindtap="onEditCategory">编辑</button><button class="text-button danger" data-id="{{item.id}}" bindtap="onDeleteCategory">删除</button></view></view>
+    <text class="footer-note">有学员的分类，需先把学员移到其他分类或未分类后再删除。</text>
+  </block>
+
+  <block wx:if="{{view === 'detail'}}">
+    <button class="back-button" bindtap="onHome"><image src="{{icons.chevronLeft.muted}}" />返回学员列表</button>
+    <view class="profile-card">
+      <view class="profile-heading"><view class="profile-main"><view class="student-name-row"><text class="page-title">{{student.name}}</text><text wx:if="{{student.isExample}}" class="example-badge">示例</text></view><text class="muted">{{student.grade || '年级待填'}} · {{student.subject || '学科待整理'}}</text></view><button class="button-quiet compact" bindtap="onEditStudent">编辑档案</button></view>
+      <text wx:if="{{student.isExample}}" class="example-note">示例档案，可直接编辑、调整分类或删除。</text>
+      <text class="profile-category">分类：{{studentCategoryName}}{{studentCategoryTotal ? ' · 默认满分 ' + studentCategoryTotal : ''}}</text>
+      <text wx:if="{{student.note}}" class="profile-note" selectable="{{true}}">{{student.note}}</text>
+      <view class="profile-meta"><text>{{scores.length}} 条成绩 · {{plans.length}} 条计划</text><button class="text-button danger" bindtap="onDeleteStudent">删除档案</button></view>
+    </view>
+    <view class="detail-tabs">
+      <button class="detail-tab {{detailTab === 'scores' ? 'active' : ''}}" data-tab="scores" bindtap="onTab">成绩</button>
+      <button class="detail-tab {{detailTab === 'tags' ? 'active' : ''}}" data-tab="tags" bindtap="onTab">观察标签</button>
+      <button class="detail-tab {{detailTab === 'plans' ? 'active' : ''}}" data-tab="plans" bindtap="onTab">跟进计划</button>
+      <button class="detail-tab {{detailTab === 'ideas' ? 'active' : ''}}" data-tab="ideas" bindtap="onTab">建议</button>
+    </view>
+
+    <block wx:if="{{detailTab === 'scores'}}">
+      <view class="section-title"><text>每一次成绩</text><button class="button-primary compact icon-action" bindtap="onAddScore"><image class="action-icon" src="{{icons.plus.white}}" /><text>记成绩</text></button></view>
+      <view wx:if="{{scoreSubjectOptions.length > 2}}" class="subject-filter"><text class="small muted">旧版记录 · 按科目查看列表</text><picker range="{{scoreSubjectNames}}" value="{{scoreSubjectIndex}}" bindchange="onScoreSubject"><view class="subject-picker">{{scoreSubjectNames[scoreSubjectIndex]}}<text>选择 ›</text></view></picker><text class="subject-count">{{visibleScores.length}} 条记录 · 不改变图表学科</text></view>
+      <view wx:if="{{chartMessage}}" class="chart-notice"><text>{{chartMessage}}</text></view>
+      <view wx:if="{{chart.length}}" class="card chart-card">
+        <view class="card-heading"><text class="card-title">{{chartSubject}} · 得分率</text><text class="muted small">最近 {{chart.length}} 次 · 满分 100%</text></view>
+        <score-line id="scoreLineChart" points="{{chart}}" height="{{180}}" compact="{{false}}" />
+        <text class="small muted line-note">得分率＝得分 ÷ 满分。不同试卷难度可能不同，不据此判断能力变化或知识掌握。</text>
+      </view>
+      <view wx:if="{{!scores.length}}" class="empty-card"><text class="empty-title">还没有成绩记录</text><text class="empty-text">记下考试名称、日期和得分。
+有不同满分时，用得分率帮助整理。</text><button class="button-primary" bindtap="onAddScore">记录第一条成绩</button></view>
+      <view wx:for="{{visibleScores}}" wx:key="id" class="card record-card">
+        <view class="record-top"><view class="grow"><text class="subject-badge">{{item.subjectLabel}}</text><text class="card-title">{{item.title}}</text><text class="muted small">{{item.date}}</text></view><view class="score-summary"><text class="score-big">{{item.score}}<text class="score-total"> / {{item.total}}</text></text><text class="score-rate">得分率 {{item.rate}}%</text></view></view>
+        <text wx:if="{{item.note}}" class="record-note" selectable="{{true}}">{{item.note}}</text>
+        <view class="record-actions"><button class="text-button observation-action" data-id="{{item.id}}" bindtap="onObserveScore">记录这次观察</button><button class="text-button" data-kind="score" data-id="{{item.id}}" bindtap="onEditRecord">编辑</button><button class="text-button danger" data-kind="score" data-id="{{item.id}}" bindtap="onDeleteRecord">删除</button></view>
+      </view>
+    </block>
+
+    <block wx:if="{{detailTab === 'tags'}}">
+      <view class="intro-note">记录具体观察，保留判断依据。标签由老师维护，不由成绩自动生成。</view>
+      <view wx:for="{{tagGroups}}" wx:for-item="group" wx:key="key" class="tag-section">
+        <view class="section-title"><view><text class="tag-heading {{group.tone}}">{{group.label}}</text><text class="small muted tag-count">{{group.activeCount}} 个当前标签</text></view><button class="button-quiet compact" data-type="{{group.key}}" bindtap="onAddTag">＋ 添加</button></view>
+        <view wx:if="{{!group.tags.length}}" class="tag-empty">{{group.hint}}，暂时没有也可以。</view>
+        <view wx:for="{{group.tags}}" wx:for-item="tag" wx:key="id" class="card tag-card {{tag.status === 'resolved' ? 'resolved' : ''}}">
+          <view class="record-top"><view class="grow"><text class="subject-badge">{{tag.subjectLabel}}</text><text class="tag-label {{group.tone}}">{{tag.label}}</text></view><text class="status-pill" wx:if="{{tag.status === 'resolved'}}">已解除</text></view>
+          <text wx:if="{{tag.note}}" class="record-note" selectable="{{true}}">{{tag.note}}</text><text class="muted small">观察于 {{tag.observedOn}}</text>
+          <view class="record-actions"><button class="text-button" data-id="{{tag.id}}" bindtap="onToggleTag">{{tag.status === 'active' ? '解除标签' : '恢复标签'}}</button><button class="text-button" data-kind="tag" data-id="{{tag.id}}" bindtap="onEditRecord">编辑</button><button class="text-button danger" data-kind="tag" data-id="{{tag.id}}" bindtap="onDeleteRecord">删除</button></view>
+        </view>
+      </view>
+    </block>
+
+    <block wx:if="{{detailTab === 'plans'}}">
+      <view class="section-title"><text>让观察有后续</text><button class="button-primary compact icon-action" bindtap="onAddPlan"><image class="action-icon" src="{{icons.plus.white}}" /><text>写计划</text></button></view>
+      <view wx:if="{{completedPlanId}}" class="completion-next"><text>完成记录已保存。需要核对后续表现时，可记录一次复测。</text><button class="button-quiet full-width" data-id="{{completedPlanId}}" bindtap="onRetestPlan">记录一次复测</button></view>
+      <view wx:if="{{!plans.length}}" class="empty-card"><text class="empty-title">留下一件可执行的小事</text><text class="empty-text">可以自己写，也可以从“建议”中选一条，
+调整后再保存为计划。</text><button class="button-primary" bindtap="onAddPlan">写一条跟进计划</button></view>
+      <view wx:for="{{plans}}" wx:key="id" class="card plan-card {{item.status === 'done' ? 'plan-done' : ''}}">
+        <view class="record-top"><text class="status-pill {{item.status === 'done' ? 'status-done' : 'status-todo'}}">{{item.status === 'done' ? '已完成' : '待跟进'}}</text><text wx:if="{{item.dueDate}}" class="small {{item.isOverdue ? 'overdue' : 'muted'}}">{{item.isOverdue ? '待补跟进 · ' : '跟进日 · '}}{{item.dueDate}}</text><text wx:else class="muted small">未定跟进日</text></view>
+        <text class="card-title plan-title">{{item.title}}</text><text class="record-body" selectable="{{true}}">{{item.body}}</text>
+        <view wx:if="{{item.sourceEvidence.length}}" class="evidence-box"><text class="evidence-title">保存时的观察依据</text><text wx:for="{{item.sourceEvidence}}" wx:for-item="evidence" wx:key="*this" class="evidence-line">· {{evidence}}</text></view>
+        <view wx:if="{{item.result || item.status === 'done'}}" class="result-box"><text class="evidence-title">跟进结果</text><text class="record-body" selectable="{{true}}">{{item.result || '本次未填写结果，可补充实际观察。'}}</text></view>
+        <view class="record-actions plan-actions"><button wx:if="{{item.status === 'todo'}}" class="button-primary compact" data-kind="complete" data-id="{{item.id}}" bindtap="onEditRecord">记录完成</button><block wx:else><button class="text-button" data-id="{{item.id}}" bindtap="onRetestPlan">记录复测</button><button class="text-button" data-id="{{item.id}}" bindtap="onReopenPlan">重新跟进</button></block><button class="text-button" data-kind="plan" data-id="{{item.id}}" bindtap="onEditRecord">编辑</button><button class="text-button danger" data-kind="plan" data-id="{{item.id}}" bindtap="onDeleteRecord">删除</button></view>
+      </view>
+    </block>
+
+    <block wx:if="{{detailTab === 'ideas'}}">
+      <view class="ideas-intro"><text class="eyebrow">一次具体的小跟进</text><text class="section-heading">由观察出发，选择下一步</text><text class="muted">以下按本地规则和现有记录整理建议，同科目记录才放在一起看。请结合课堂实际调整；不是 AI 诊断，不会自动添加标签或计划。</text></view>
+      <view wx:for="{{ideas}}" wx:key="key" class="card idea-card"><text class="idea-index">建议 {{index + 1}}</text><text class="card-title">{{item.title}}</text><text class="record-body" selectable="{{true}}">{{item.body}}</text><view class="evidence-box"><text class="evidence-title">为什么有这条建议</text><text wx:for="{{item.evidence}}" wx:for-item="evidence" wx:key="*this" class="evidence-line">· {{evidence}}</text></view><button class="button-quiet full-width" data-key="{{item.key}}" bindtap="onUseIdea">{{item.existingPlanId ? '继续已有跟进计划 →' : '编辑为跟进计划 →'}}</button></view>
+    </block>
+  </block>
+
+  <block wx:if="{{view === 'form'}}">
+    <button class="back-button" bindtap="onCancelForm">‹ 返回，保留已存档案</button>
+    <view class="page-heading form-heading"><text class="page-title">{{formTitle}}</text><text class="page-desc" wx:if="{{formStudentName}}">所属学员：{{formStudentName}}</text><text wx:elif="{{formKind === 'category'}}" class="page-desc">分类按你的教学习惯命名，满分可在每次记成绩时调整。</text><text wx:else class="page-desc">推荐使用学员代号，只填写教学所需信息。</text></view>
+    <view class="card form-card">
+      <block wx:if="{{formKind === 'category'}}">
+        <view class="field"><text class="field-label">分类名称 <text class="required">*</text></text><input value="{{form.name}}" data-field="name" bindinput="onFieldInput" placeholder="例如：小学英语、初中英语" maxlength="50" /></view>
+        <view class="field"><text class="field-label">默认满分 <text class="required">*</text></text><input type="digit" value="{{form.total}}" data-field="total" bindinput="onFieldInput" placeholder="例如：100、120、150" maxlength="16" /></view>
+        <view class="form-tip">这个满分用于该分类以后新增的成绩，记分时仍可修改。更改分类满分不会重算已有成绩，移动学员也不会改变历史记录。</view>
+      </block>
+      <block wx:if="{{formKind === 'student'}}">
+        <view class="field"><text class="field-label">学员称呼 <text class="required">*</text></text><input value="{{form.name}}" data-field="name" bindinput="onFieldInput" placeholder="例如：学员 A" maxlength="100" /></view>
+        <view class="field"><text class="field-label">年级 <text class="required">*</text></text><input value="{{form.grade}}" data-field="grade" bindinput="onFieldInput" placeholder="例如：五年级、七年级或高一" maxlength="100" /></view>
+        <view class="field"><text class="field-label">学员分类</text><picker range="{{categoryNames}}" value="{{categoryIndex}}" bindchange="onStudentCategory"><view class="picker-value category-picker">{{categoryNames[categoryIndex]}}<text>选择分类 ›</text></view></picker><text class="small muted field-hint">{{form.categoryId ? '分类满分将带入以后新增的成绩；移动分类不会改变已有成绩。' : '未分类也可以保存。可在首页“管理”中设置分类，再编辑学员选择。'}}</text></view>
+        <view class="field"><text class="field-label">学科</text><view wx:if="{{!formIsEdit}}" class="fixed-subject"><text>英语</text><text class="fixed-subject-note">新建英语教学档案</text></view><input wx:else value="{{form.subject}}" data-field="subject" bindinput="onFieldInput" placeholder="旧档案请填写实际学科" maxlength="50" /></view>
+        <view wx:if="{{formIsEdit}}" class="form-tip archive-form-tip">已有档案按实际记录保留学科。修改前请核对成绩和标签，不要把其他学科直接改成英语。</view>
+        <view class="field"><text class="field-label">教学备注</text><textarea value="{{form.note}}" data-field="note" bindinput="onFieldInput" placeholder="记录必要的教学背景，不填写无关隐私" maxlength="2000" auto-height="{{true}}" /></view>
+      </block>
+      <block wx:if="{{formKind === 'score'}}">
+        <view class="field"><text class="field-label">考试名称 <text class="required">*</text></text><input value="{{form.title}}" data-field="title" bindinput="onFieldInput" placeholder="例如：第三单元小测" maxlength="200" /></view>
+        <view wx:if="{{formSubjectFixed}}" class="inherited-subject">{{form.subject}} · 已沿用档案学科</view>
+        <view wx:else class="field"><text class="field-label">本次成绩学科</text><input value="{{form.subject}}" data-field="subject" bindinput="onFieldInput" placeholder="核对旧记录后填写实际学科" maxlength="50" /><text class="small muted field-hint">档案学科：{{formArchiveSubject || '待整理'}}。旧版未分类或其他学科记录仍保留，请按实际内容整理。</text></view>
+        <view class="field"><text class="field-label">考试日期 <text class="required">*</text></text><picker mode="date" value="{{form.date}}" data-field="date" bindchange="onFieldInput"><view class="picker-value">{{form.date}}<text>选择日期 ›</text></view></picker></view>
+        <view class="field-row"><view class="field"><text class="field-label">得分 <text class="required">*</text></text><input type="digit" value="{{form.score}}" data-field="score" bindinput="onFieldInput" placeholder="0 或以上" maxlength="16" /></view><view class="field"><text class="field-label">满分 <text class="required">*</text></text><input type="digit" value="{{form.total}}" data-field="total" bindinput="onFieldInput" placeholder="例如：100" maxlength="16" /></view></view>
+        <text class="score-total-hint">{{formTotalHint}}</text>
+        <view class="field"><text class="field-label">本次备注</text><textarea value="{{form.note}}" data-field="note" bindinput="onFieldInput" placeholder="试卷范围、题型或需要留意的情况" maxlength="2000" auto-height="{{true}}" /></view>
+        <view class="form-tip">只记录这一次考试。不按总分自动判定薄弱点或掌握度。</view>
+      </block>
+      <block wx:if="{{formKind === 'tag'}}">
+        <view class="field"><text class="field-label">观察类型 <text class="required">*</text></text><picker range="{{typeNames}}" value="{{typeIndex}}" bindchange="onTagType"><view class="picker-value">{{typeNames[typeIndex]}}<text>选择类型 ›</text></view></picker></view>
+        <view wx:if="{{formSubjectFixed}}" class="field"><text class="field-label">观察范围</text><view class="scope-chips"><button class="scope-chip {{form.subject ? 'scope-selected' : ''}}" data-scope="archive" bindtap="onTagScope">{{formArchiveSubject}}</button><button class="scope-chip {{!form.subject ? 'scope-selected' : ''}}" data-scope="general" bindtap="onTagScope">通用</button></view></view>
+        <view wx:else class="field"><text class="field-label">标签学科 <text class="optional">选填</text></text><input value="{{form.subject}}" data-field="subject" bindinput="onFieldInput" placeholder="按旧记录实际内容填写；通用可留空" maxlength="50" /><text class="small muted field-hint">档案学科：{{formArchiveSubject || '待整理'}}。留空记为“通用”；标签只保存在这份档案中。</text></view>
+        <view class="field"><text class="field-label">具体标签 <text class="required">*</text></text><input value="{{form.label}}" data-field="label" bindinput="onFieldInput" placeholder="例如：词汇拼写 / 阅读定位 / 主动复习" maxlength="80" /><view wx:if="{{quickTagLabels.length}}" class="quick-tags"><button wx:for="{{quickTagLabels}}" wx:key="*this" class="quick-tag" data-label="{{item}}" bindtap="onQuickTag">{{item}}</button></view><text wx:if="{{quickTagLabels.length}}" class="small muted field-hint">点选后可修改，请只记录这位学员已学内容中的实际观察。</text></view>
+        <view class="field"><text class="field-label">观察日期 <text class="required">*</text></text><picker mode="date" value="{{form.observedOn}}" data-field="observedOn" bindchange="onFieldInput"><view class="picker-value">{{form.observedOn}}<text>选择日期 ›</text></view></picker></view>
+        <view class="field"><text class="field-label">观察依据</text><textarea value="{{form.note}}" data-field="note" bindinput="onFieldInput" placeholder="写下看到的表现、例题或课堂现象" maxlength="2000" auto-height="{{true}}" /></view>
+        <view class="form-tip">标签是老师的当前观察。状态变化时可解除，历史记录仍保留。同一科目 / 项目的相同知识点，不能同时标记为当前薄弱与强项。</view>
+      </block>
+      <block wx:if="{{formKind === 'plan'}}">
+        <view class="field"><text class="field-label">计划标题 <text class="required">*</text></text><input value="{{form.title}}" data-field="title" bindinput="onFieldInput" placeholder="一件具体可执行的事" maxlength="200" /></view>
+        <view class="field"><text class="field-label">怎么跟进 <text class="required">*</text></text><textarea class="long-textarea" value="{{form.body}}" data-field="body" bindinput="onFieldInput" placeholder="做什么、怎样观察、下次核对什么" maxlength="8000" auto-height="{{true}}" /></view>
+        <view class="field"><text class="field-label">跟进日期 <text class="optional">选填</text></text><picker mode="date" value="{{form.dueDate}}" data-field="dueDate" bindchange="onFieldInput"><view class="picker-value">{{form.dueDate || '暂不设定'}}<text>选择日期 ›</text></view></picker><button wx:if="{{form.dueDate}}" class="text-button clear-date" bindtap="onClearDueDate">清除日期</button></view>
+        <view wx:if="{{form.sourceEvidence.length}}" class="evidence-box"><text class="evidence-title">随计划保存的观察依据</text><text wx:for="{{form.sourceEvidence}}" wx:key="*this" class="evidence-line">· {{item}}</text></view>
+        <view wx:if="{{formIsEdit}}" class="field"><text class="field-label">跟进结果</text><textarea value="{{form.result}}" data-field="result" bindinput="onFieldInput" placeholder="写下已发生的跟进与实际观察" maxlength="4000" auto-height="{{true}}" /><text class="small muted">当前状态：{{form.status === 'done' ? '已完成' : '待跟进'}}。填写结果不会自动改变状态。</text></view>
+      </block>
+      <block wx:if="{{formKind === 'complete'}}">
+        <text class="card-title">{{form.title}}</text><text class="record-body">{{form.body}}</text>
+        <view class="field completion-field"><text class="field-label">这次跟进发生了什么</text><textarea class="long-textarea" value="{{form.result}}" data-field="result" bindinput="onFieldInput" placeholder="建议记录：做了什么、观察到什么、是否需要继续跟进" maxlength="4000" auto-height="{{true}}" /></view>
+        <view class="form-tip">保存后标记为“已完成”。这表示计划已执行，不代表知识点已掌握。</view>
+      </block>
+    </view>
+    <view class="form-actions"><button class="button-quiet" bindtap="onCancelForm">取消</button><button class="button-primary" bindtap="onSaveForm">{{formKind === 'complete' ? '保存完成记录' : '保存到' + spaceLabel}}</button></view>
+  </block>
+
+  <block wx:if="{{view === 'backup'}}">
+    <view class="page-heading"><text class="eyebrow">为教学记录留一份备份</text><text class="page-title">备份与恢复</text><text class="page-desc">本机只有一份档案库，示例与自行新增的档案一同备份。</text></view>
+    <view wx:if="{{blocked}}" class="recovery-card"><text class="card-title">先保留原内容，再尝试恢复</text><text class="record-body">当前档案未被重置，也没有用示例覆盖。可以重新读取、复制原内容留存，或用可信备份恢复。</text><button wx:if="{{canCopyRaw}}" class="button-quiet full-width" bindtap="onCopyRaw">复制原内容留存</button><button class="text-button reload-button" bindtap="onReload">重新读取本地档案</button></view>
+    <view class="card backup-card"><view class="step-number">01</view><text class="card-title">先留一份私人备份</text><text class="record-body">备份包含全部分类、学员档案、成绩、标签和计划。复制后，请在自己的私人文件中粘贴保存，并注明日期。</text><button class="button-primary full-width" bindtap="onExport" disabled="{{blocked}}">复制完整档案备份</button><text class="small muted line-note">复制需要你的确认。请勿粘贴到群聊、公开文档或不可信网站。</text></view>
+    <view class="card backup-card"><view class="step-number">02</view><text class="card-title">从备份恢复</text><text class="record-body">粘贴之前保存的完整备份文字，先检查，再决定是否替换。请核对备份来源和内容；恢复不会合并现有记录。</text><textarea class="backup-input" value="{{importText}}" bindinput="onImportInput" placeholder="在此粘贴完整备份 JSON 文字" maxlength="-1" auto-height="{{false}}" /><button class="button-quiet full-width" bindtap="onCheckImport">检查这份备份</button>
+      <view wx:if="{{importPreview}}" class="import-review"><text class="card-title">格式检查通过</text><view class="import-counts"><text>{{importPreview.students}} 份学员档案</text><text>{{importPreview.categories}} 个分类</text><text>{{importPreview.scores}} 条成绩</text><text>{{importPreview.tags}} 个标签</text><text>{{importPreview.plans}} 条计划</text></view><text class="small muted">本机现有学员档案：{{importPreview.currentStudents}} 份。恢复会完整替换，不会合并。</text><checkbox-group bindchange="onImportAgree"><label class="agreement"><checkbox value="replace" checked="{{importConfirmed}}" color="#CB4A20" /><text>我已核对备份归属，并已保留需要的原档案；确认替换{{spaceLabel}}。</text></label></checkbox-group><button class="button-primary full-width" disabled="{{!importConfirmed}}" bindtap="onApplyImport">恢复到{{spaceLabel}}</button></view>
+    </view>
+    <view wx:if="{{legacyDemoAvailable}}" class="card backup-card"><text class="card-title">旧版示例记录仍保留</text><text class="record-body">旧版示例空间没有自动合并进本机档案。如果曾在那里填写过内容，可单独复制原记录留存。</text><button class="button-quiet full-width" bindtap="onExportLegacyDemo">复制旧版示例记录</button></view>
+    <view class="card local-notice"><text class="card-title">关于本地档案</text><text class="evidence-line">· 不含登录、联网、云同步或自动上传。</text><text class="evidence-line">· 换设备不会自动带走档案；清理微信数据可能丢失本地记录。</text><text class="evidence-line">· 保存空间有限；提示容量不足时，先备份，再整理旧记录。保存失败不会当作成功。</text><text class="evidence-line">· 建议使用学员代号，避免填入无关个人信息。</text><button wx:if="{{!blocked}}" class="text-button reload-button" bindtap="onReload">重新读取本地档案</button></view>
+  </block>
+
+  <view wx:if="{{view !== 'form'}}" class="bottom-nav"><button class="nav-button {{view !== 'backup' ? 'nav-active' : ''}}" bindtap="onHome"><view class="nav-icon-wrap"><image class="nav-icon" src="{{view !== 'backup' ? icons.users.accent : icons.users.muted}}" /></view><text class="nav-label">档案</text></button><button class="nav-button {{view === 'backup' ? 'nav-active' : ''}}" bindtap="onBackup"><view class="nav-icon-wrap"><image class="nav-icon" src="{{view === 'backup' ? icons.databaseExport.accent : icons.databaseExport.muted}}" /></view><text class="nav-label">备份</text></button><button class="nav-button" bindtap="onHelp"><view class="nav-icon-wrap"><image class="nav-icon" src="{{icons.helpCircle.muted}}" /></view><text class="nav-label">帮助</text></button></view>
+</view>

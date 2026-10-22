@@ -1,0 +1,1018 @@
+TAP version 13
+# Subtest: new archives default safely for old callers and retain the existing public API
+ok 1 - new archives default safely for old callers and retain the existing public API
+  ---
+  duration_ms: 2.2284
+  type: 'test'
+  ...
+# Subtest: v1 and v2 migrate one explicit subject without touching old records, ids or revisions
+ok 2 - v1 and v2 migrate one explicit subject without touching old records, ids or revisions
+  ---
+  duration_ms: 1.3455
+  type: 'test'
+  ...
+# Subtest: legacy derivation uses normalized explicit subjects but never semantic aliases or display names
+ok 3 - legacy derivation uses normalized explicit subjects but never semantic aliases or display names
+  ---
+  duration_ms: 1.4245
+  type: 'test'
+  ...
+# Subtest: legacy tag-only subjects include resolved observations and never cross student ownership
+ok 4 - legacy tag-only subjects include resolved observations and never cross student ownership
+  ---
+  duration_ms: 0.4072
+  type: 'test'
+  ...
+# Subtest: schema3 does not re-derive explicitly unclassified archives on read, export or save
+ok 5 - schema3 does not re-derive explicitly unclassified archives on read, export or save
+  ---
+  duration_ms: 2.9249
+  type: 'test'
+  ...
+# Subtest: schema3 imports require the archive subject and a real boolean example flag
+ok 6 - schema3 imports require the archive subject and a real boolean example flag
+  ---
+  duration_ms: 1.1883
+  type: 'test'
+  ...
+# Subtest: archive subject has strict type, length and control validation and strips unrelated fields
+ok 7 - archive subject has strict type, length and control validation and strips unrelated fields
+  ---
+  duration_ms: 0.6243
+  type: 'test'
+  ...
+# Subtest: old UI edits preserve subject, example flag and hidden className without mutating input
+ok 8 - old UI edits preserve subject, example flag and hidden className without mutating input
+  ---
+  duration_ms: 0.2915
+  type: 'test'
+  ...
+# Subtest: new scores inherit only an omitted subject; explicit empty remains unclassified
+ok 9 - new scores inherit only an omitted subject; explicit empty remains unclassified
+  ---
+  duration_ms: 0.4495
+  type: 'test'
+  ...
+# Subtest: old score edits retain even an empty subject while the archive has a known subject
+ok 10 - old score edits retain even an empty subject while the archive has a known subject
+  ---
+  duration_ms: 0.3322
+  type: 'test'
+  ...
+# Subtest: a selected archive subject rejects different nonempty score and tag subjects atomically
+ok 11 - a selected archive subject rejects different nonempty score and tag subjects atomically
+  ---
+  duration_ms: 0.5842
+  type: 'test'
+  ...
+# Subtest: archive subject matching uses the existing normalization without guessing aliases
+ok 12 - archive subject matching uses the existing normalization without guessing aliases
+  ---
+  duration_ms: 0.3504
+  type: 'test'
+  ...
+# Subtest: changing the archive subject never rewrites known historical records or evidence
+ok 13 - changing the archive subject never rewrites known historical records or evidence
+  ---
+  duration_ms: 0.492
+  type: 'test'
+  ...
+# Subtest: archives with only unclassified scores may be assigned a subject without rewriting scores
+ok 14 - archives with only unclassified scores may be assigned a subject without rewriting scores
+  ---
+  duration_ms: 0.549
+  type: 'test'
+  ...
+# Subtest: mixed legacy archives remain intact and cannot silently select only one historical subject
+ok 15 - mixed legacy archives remain intact and cannot silently select only one historical subject
+  ---
+  duration_ms: 1.1166
+  type: 'test'
+  ...
+# Subtest: legacy corrupt records still reject before any migration result is accepted
+ok 16 - legacy corrupt records still reject before any migration result is accepted
+  ---
+  duration_ms: 0.7804
+  type: 'test'
+  ...
+# Subtest: new fields reject accessors without executing them and imported extras cannot pollute objects
+ok 17 - new fields reject accessors without executing them and imported extras cannot pollute objects
+  ---
+  duration_ms: 0.3688
+  type: 'test'
+  ...
+# Subtest: v4 exports roundtrip all canonical fields independently and reject unsupported versions
+ok 18 - v4 exports roundtrip all canonical fields independently and reject unsupported versions
+  ---
+  duration_ms: 0.3679
+  type: 'test'
+  ...
+# Subtest: first-use English examples have ten removable archives in three categories and four scores each
+ok 19 - first-use English examples have ten removable archives in three categories and four scores each
+  ---
+  duration_ms: 7.3003
+  type: 'test'
+  ...
+# Subtest: fresh empty database includes categories and exposes only the intended category mutations
+ok 20 - fresh empty database includes categories and exposes only the intended category mutations
+  ---
+  duration_ms: 1.9478
+  type: 'test'
+  ...
+# Subtest: category creation and editing are immutable, canonical and increment revision once
+ok 21 - category creation and editing are immutable, canonical and increment revision once
+  ---
+  duration_ms: 0.788
+  type: 'test'
+  ...
+# Subtest: category names reject normalized duplicates in creation, editing and import
+ok 22 - category names reject normalized duplicates in creation, editing and import
+  ---
+  duration_ms: 1.3372
+  type: 'test'
+  ...
+# Subtest: category names and totals enforce type, length, control and finite positive bounded values
+ok 23 - category names and totals enforce type, length, control and finite positive bounded values
+  ---
+  duration_ms: 3.2963
+  type: 'test'
+  ...
+# Subtest: unknown and malformed category ids never become new categories or successful deletions
+ok 24 - unknown and malformed category ids never become new categories or successful deletions
+  ---
+  duration_ms: 0.4405
+  type: 'test'
+  ...
+# Subtest: unassigned is reserved only for category ids and cannot collide with the dashboard fallback
+ok 25 - unassigned is reserved only for category ids and cannot collide with the dashboard fallback
+  ---
+  duration_ms: 0.3695
+  type: 'test'
+  ...
+# Subtest: occupied category deletion requires moving students and never cascades records
+ok 26 - occupied category deletion requires moving students and never cascades records
+  ---
+  duration_ms: 0.707
+  type: 'test'
+  ...
+# Subtest: deleting a student leaves its category intact and then permits empty-category deletion
+ok 27 - deleting a student leaves its category intact and then permits empty-category deletion
+  ---
+  duration_ms: 0.2461
+  type: 'test'
+  ...
+# Subtest: student category omission preserves an edit while explicit empty moves to unclassified
+ok 28 - student category omission preserves an edit while explicit empty moves to unclassified
+  ---
+  duration_ms: 0.1755
+  type: 'test'
+  ...
+# Subtest: student categories require known references and strict strings on import
+ok 29 - student categories require known references and strict strings on import
+  ---
+  duration_ms: 0.6168
+  type: 'test'
+  ...
+# Subtest: only new scores with omitted total inherit a category default
+ok 30 - only new scores with omitted total inherit a category default
+  ---
+  duration_ms: 0.993
+  type: 'test'
+  ...
+# Subtest: uncategorized scores need an explicit total and never silently default to 100
+ok 31 - uncategorized scores need an explicit total and never silently default to 100
+  ---
+  duration_ms: 0.2464
+  type: 'test'
+  ...
+# Subtest: changing a category default affects future defaults and leaves all stored scores untouched
+ok 32 - changing a category default affects future defaults and leaves all stored scores untouched
+  ---
+  duration_ms: 0.3626
+  type: 'test'
+  ...
+# Subtest: moving a student changes only future defaults, never historical denominators or ownership
+ok 33 - moving a student changes only future defaults, never historical denominators or ownership
+  ---
+  duration_ms: 0.4292
+  type: 'test'
+  ...
+# Subtest: v1/v2 migration adds no categories and preserves old totals while retaining earlier subject derivation
+ok 34 - v1/v2 migration adds no categories and preserves old totals while retaining earlier subject derivation
+  ---
+  duration_ms: 0.844
+  type: 'test'
+  ...
+# Subtest: v3 migration preserves explicit subject and isExample instead of deriving from scores or names
+ok 35 - v3 migration preserves explicit subject and isExample instead of deriving from scores or names
+  ---
+  duration_ms: 0.496
+  type: 'test'
+  ...
+# Subtest: all legacy versions retain previously valid very large score totals without coercion or new ceilings
+ok 36 - all legacy versions retain previously valid very large score totals without coercion or new ceilings
+  ---
+  duration_ms: 0.5939
+  type: 'test'
+  ...
+# Subtest: v3 damaged subject/example fields and all legacy data damage still reject on migration
+ok 37 - v3 damaged subject/example fields and all legacy data damage still reject on migration
+  ---
+  duration_ms: 0.5836
+  type: 'test'
+  ...
+# Subtest: v4 strictly validates complete categories and rejects ids duplicated across any table
+ok 38 - v4 strictly validates complete categories and rejects ids duplicated across any table
+  ---
+  duration_ms: 0.7834
+  type: 'test'
+  ...
+# Subtest: category and membership accessors cannot execute, and extras/prototype keys are stripped
+ok 39 - category and membership accessors cannot execute, and extras/prototype keys are stripped
+  ---
+  duration_ms: 0.8814
+  type: 'test'
+  ...
+# Subtest: category capacity and revision overflow reject atomically
+ok 40 - category capacity and revision overflow reject atomically
+  ---
+  duration_ms: 1.5863
+  type: 'test'
+  ...
+# Subtest: v4 categories and membership roundtrip as independent canonical data
+ok 41 - v4 categories and membership roundtrip as independent canonical data
+  ---
+  duration_ms: 0.2818
+  type: 'test'
+  ...
+# Subtest: ten fictional examples use normal CRUD with editable categories, forty scaled scores and removable students
+ok 42 - ten fictional examples use normal CRUD with editable categories, forty scaled scores and removable students
+  ---
+  duration_ms: 8.2051
+  type: 'test'
+  ...
+# Subtest: normal export: success, privacy rejection 103, success clears opposing messages without changing records
+ok 43 - normal export: success, privacy rejection 103, success clears opposing messages without changing records
+  ---
+  duration_ms: 33.6349
+  type: 'test'
+  ...
+# Subtest: normal export: success, privacy rejection 104, success clears opposing messages without changing records
+ok 44 - normal export: success, privacy rejection 104, success clears opposing messages without changing records
+  ---
+  duration_ms: 10.1074
+  type: 'test'
+  ...
+# Subtest: raw export: success, privacy rejection 103, success clears opposing messages without changing records
+ok 45 - raw export: success, privacy rejection 103, success clears opposing messages without changing records
+  ---
+  duration_ms: 3.3465
+  type: 'test'
+  ...
+# Subtest: raw export: success, privacy rejection 104, success clears opposing messages without changing records
+ok 46 - raw export: success, privacy rejection 104, success clears opposing messages without changing records
+  ---
+  duration_ms: 5.9497
+  type: 'test'
+  ...
+# Subtest: legacy export: success, privacy rejection 103, success clears opposing messages without changing records
+ok 47 - legacy export: success, privacy rejection 103, success clears opposing messages without changing records
+  ---
+  duration_ms: 8.9304
+  type: 'test'
+  ...
+# Subtest: legacy export: success, privacy rejection 104, success clears opposing messages without changing records
+ok 48 - legacy export: success, privacy rejection 104, success clears opposing messages without changing records
+  ---
+  duration_ms: 7.7463
+  type: 'test'
+  ...
+# Subtest: empty group has no invented lines and uses its configured scale
+ok 49 - empty group has no invented lines and uses its configured scale
+  ---
+  duration_ms: 2.4227
+  type: 'test'
+  ...
+# Subtest: comparison covers every class member regardless of query or pending-plan filter
+ok 50 - comparison covers every class member regardless of query or pending-plan filter
+  ---
+  duration_ms: 1.023
+  type: 'test'
+  ...
+# Subtest: subject options normalize unicode, spacing and case without guessing semantic aliases
+ok 51 - subject options normalize unicode, spacing and case without guessing semantic aliases
+  ---
+  duration_ms: 0.322
+  type: 'test'
+  ...
+# Subtest: valid subject selection switches independently and invalid choice falls back to English
+ok 52 - valid subject selection switches independently and invalid choice falls back to English
+  ---
+  duration_ms: 0.1977
+  type: 'test'
+  ...
+# Subtest: without English the first explicit subject is selected, not inferred from names or grade
+ok 53 - without English the first explicit subject is selected, not inferred from names or grade
+  ---
+  duration_ms: 0.1212
+  type: 'test'
+  ...
+# Subtest: unknown subjects never draw even if their stored scores contain a subject
+ok 54 - unknown subjects never draw even if their stored scores contain a subject
+  ---
+  duration_ms: 0.1613
+  type: 'test'
+  ...
+# Subtest: unassigned selection is exact and unknown group ids do not fall into another class
+ok 55 - unassigned selection is exact and unknown group ids do not fall into another class
+  ---
+  duration_ms: 0.1279
+  type: 'test'
+  ...
+# Subtest: same actual totals use raw points and ignore later category-default changes
+ok 56 - same actual totals use raw points and ignore later category-default changes
+  ---
+  duration_ms: 0.0904
+  type: 'test'
+  ...
+# Subtest: mixed actual totals across students use rounded percentages and explain the conversion
+ok 57 - mixed actual totals across students use rounded percentages and explain the conversion
+  ---
+  duration_ms: 0.1576
+  type: 'test'
+  ...
+# Subtest: mixed totals within one student also select percentage mode
+ok 58 - mixed totals within one student also select percentage mode
+  ---
+  duration_ms: 1.1727
+  type: 'test'
+  ...
+# Subtest: only the final six visible points determine the scale, not older or excluded totals
+ok 59 - only the final six visible points determine the scale, not older or excluded totals
+  ---
+  duration_ms: 0.4338
+  type: 'test'
+  ...
+# Subtest: same-day records retain their actual date and deterministic id order
+ok 60 - same-day records retain their actual date and deterministic id order
+  ---
+  duration_ms: 0.2372
+  type: 'test'
+  ...
+# Subtest: missing exams create no zero or joined placeholder points and remain in legend
+ok 61 - missing exams create no zero or joined placeholder points and remain in legend
+  ---
+  duration_ms: 0.1493
+  type: 'test'
+  ...
+# Subtest: zero scores and very small positive totals remain real records with valid finite scales
+ok 62 - zero scores and very small positive totals remain real records with valid finite scales
+  ---
+  duration_ms: 0.2673
+  type: 'test'
+  ...
+# Subtest: valid enormous historical totals do not overflow percentage conversion
+ok 63 - valid enormous historical totals do not overflow percentage conversion
+  ---
+  duration_ms: 0.1497
+  type: 'test'
+  ...
+# Subtest: invalid or absent marks, zero totals and impossible dates are excluded rather than made zero
+ok 64 - invalid or absent marks, zero totals and impossible dates are excluded rather than made zero
+  ---
+  duration_ms: 0.3669
+  type: 'test'
+  ...
+# Subtest: no visible scores use category scale without inventing points, including tiny defaults
+ok 65 - no visible scores use category scale without inventing points, including tiny defaults
+  ---
+  duration_ms: 0.1613
+  type: 'test'
+  ...
+# Subtest: palette and line styles depend on global student position, not selected group or subject
+ok 66 - palette and line styles depend on global student position, not selected group or subject
+  ---
+  duration_ms: 0.3282
+  type: 'test'
+  ...
+# Subtest: selection and output do not mutate input or expose shared nested arrays
+ok 67 - selection and output do not mutate input or expose shared nested arrays
+  ---
+  duration_ms: 0.2152
+  type: 'test'
+  ...
+# Subtest: invalid archive shapes and an invalid cutoff date fail with readable errors
+ok 68 - invalid archive shapes and an invalid cutoff date fail with readable errors
+  ---
+  duration_ms: 0.4821
+  type: 'test'
+  ...
+# Subtest: CommonJS and globalThis expose the same API; fresh empty databases are isolated
+ok 69 - CommonJS and globalThis expose the same API; fresh empty databases are isolated
+  ---
+  duration_ms: 6.2312
+  type: 'test'
+  ...
+# Subtest: browser script works without require/module and demo dates follow the local clock
+ok 70 - browser script works without require/module and demo dates follow the local clock
+  ---
+  duration_ms: 8.6124
+  type: 'test'
+  ...
+# Subtest: saving normalizes fields, strips extras, and never mutates frozen input or shares arrays
+ok 71 - saving normalizes fields, strips extras, and never mutates frozen input or shares arrays
+  ---
+  duration_ms: 1.1926
+  type: 'test'
+  ...
+# Subtest: editing unknown ids is never silently treated as creation for any collection
+ok 72 - editing unknown ids is never silently treated as creation for any collection
+  ---
+  duration_ms: 1.1303
+  type: 'test'
+  ...
+# Subtest: explicit empty/null/nonstring ids are rejected instead of generating a new record
+ok 73 - explicit empty/null/nonstring ids are rejected instead of generating a new record
+  ---
+  duration_ms: 0.3273
+  type: 'test'
+  ...
+# Subtest: valid edits preserve ids, increment revision exactly once, and replace the intended row
+ok 74 - valid edits preserve ids, increment revision exactly once, and replace the intended row
+  ---
+  duration_ms: 0.5188
+  type: 'test'
+  ...
+# Subtest: numeric form inputs accept decimals and zero, but reject coercion tricks, blanks, nonfinite and bounds
+ok 75 - numeric form inputs accept decimals and zero, but reject coercion tricks, blanks, nonfinite and bounds
+  ---
+  duration_ms: 1.028
+  type: 'test'
+  ...
+# Subtest: all date fields validate actual Gregorian dates and do not invent missing dates
+ok 76 - all date fields validate actual Gregorian dates and do not invent missing dates
+  ---
+  duration_ms: 1.1277
+  type: 'test'
+  ...
+# Subtest: orphan records and cross-student reassignment fail atomically for scores, tags and plans
+ok 77 - orphan records and cross-student reassignment fail atomically for scores, tags and plans
+  ---
+  duration_ms: 0.954
+  type: 'test'
+  ...
+# Subtest: active tags reject duplicate labels and weak/strong conflicts after case/width/space normalization
+ok 78 - active tags reject duplicate labels and weak/strong conflicts after case/width/space normalization
+  ---
+  duration_ms: 0.5651
+  type: 'test'
+  ...
+# Subtest: same labels are independent across students and editing a tag excludes its own old version
+ok 79 - same labels are independent across students and editing a tag excludes its own old version
+  ---
+  duration_ms: 0.2987
+  type: 'test'
+  ...
+# Subtest: student deletion cascades only that student; independent deletion leaves other evidence snapshots intact
+ok 80 - student deletion cascades only that student; independent deletion leaves other evidence snapshots intact
+  ---
+  duration_ms: 1.836
+  type: 'test'
+  ...
+# Subtest: export/import is a lossless independent canonical clone and full replacement does not merge records
+ok 81 - export/import is a lossless independent canonical clone and full replacement does not merge records
+  ---
+  duration_ms: 0.4496
+  type: 'test'
+  ...
+# Subtest: full validation rejects malformed shape, schema and revision instead of resetting data
+ok 82 - full validation rejects malformed shape, schema and revision instead of resetting data
+  ---
+  duration_ms: 0.6765
+  type: 'test'
+  ...
+# Subtest: imports validate every record, reject duplicates across tables, orphans, conflicting tags and bad dates
+ok 83 - imports validate every record, reject duplicates across tables, orphans, conflicting tags and bad dates
+  ---
+  duration_ms: 1.6727
+  type: 'test'
+  ...
+# Subtest: extra fields and prototype-pollution keys are removed recursively without touching prototypes
+ok 84 - extra fields and prototype-pollution keys are removed recursively without touching prototypes
+  ---
+  duration_ms: 0.5032
+  type: 'test'
+  ...
+# Subtest: known accessor fields and sparse arrays fail rather than execute or become null records
+ok 85 - known accessor fields and sparse arrays fail rather than execute or become null records
+  ---
+  duration_ms: 0.2206
+  type: 'test'
+  ...
+# Subtest: all important field length limits and nonstring/control inputs are enforced
+ok 86 - all important field length limits and nonstring/control inputs are enforced
+  ---
+  duration_ms: 1.7276
+  type: 'test'
+  ...
+# Subtest: collection and total content capacity limits apply to imports and mutations atomically
+ok 87 - collection and total content capacity limits apply to imports and mutations atomically
+  ---
+  duration_ms: 17.372
+  type: 'test'
+  ...
+# Subtest: revision overflow fails without mutating the original database
+ok 88 - revision overflow fails without mutating the original database
+  ---
+  duration_ms: 0.4246
+  type: 'test'
+  ...
+# Subtest: empty and resolved-only histories ask for concrete observation rather than invent diagnoses
+ok 89 - empty and resolved-only histories ask for concrete observation rather than invent diagnoses
+  ---
+  duration_ms: 0.5829
+  type: 'test'
+  ...
+# Subtest: weak/strong/habit suggestions are specific, evidence-linked, gentle and save as editable plan snapshots
+ok 90 - weak/strong/habit suggestions are specific, evidence-linked, gentle and save as editable plan snapshots
+  ---
+  duration_ms: 1.2842
+  type: 'test'
+  ...
+# Subtest: suggestions use each exam denominator and avoid causal/trend claims or cross-student evidence
+ok 91 - suggestions use each exam denominator and avoid causal/trend claims or cross-student evidence
+  ---
+  duration_ms: 0.5521
+  type: 'test'
+  ...
+# Subtest: future observations are not used early; due followups exclude completed, future and other students
+ok 92 - future observations are not used early; due followups exclude completed, future and other students
+  ---
+  duration_ms: 0.3506
+  type: 'test'
+  ...
+# Subtest: suggestions limit each tag type to recent observations and output remains saveable
+ok 93 - suggestions limit each tag type to recent observations and output remains saveable
+  ---
+  duration_ms: 1.1583
+  type: 'test'
+  ...
+# Subtest: pie uses count-proportional full-circle sectors, omits zero counts, and subtly offsets the selected category
+ok 94 - pie uses count-proportional full-circle sectors, omits zero counts, and subtly offsets the selected category
+  ---
+  duration_ms: 4.3449
+  type: 'test'
+  ...
+# Subtest: zero pie stays neutral without fabricated full disk or PNG export
+ok 95 - zero pie stays neutral without fabricated full disk or PNG export
+  ---
+  duration_ms: 1.0448
+  type: 'test'
+  ...
+# Subtest: single pie category is a disk without a misleading radial split
+ok 96 - single pie category is a disk without a misleading radial split
+  ---
+  duration_ms: 1.7044
+  type: 'test'
+  ...
+# Subtest: all cohort series render, with shared true-date x and unchanged 0..max y
+ok 97 - all cohort series render, with shared true-date x and unchanged 0..max y
+  ---
+  duration_ms: 4.5456
+  type: 'test'
+  ...
+# Subtest: date distances are proportional, same-day values share x, and inputs remain untouched
+ok 98 - date distances are proportional, same-day values share x, and inputs remain untouched
+  ---
+  duration_ms: 2.1902
+  type: 'test'
+  ...
+# Subtest: single points have no fabricated line and missing/invalid dates are not zero scores
+ok 99 - single points have no fabricated line and missing/invalid dates are not zero scores
+  ---
+  duration_ms: 1.3024
+  type: 'test'
+  ...
+# Subtest: same-day multi-point records share x and focus changes emphasis without dropping lines
+ok 100 - same-day multi-point records share x and focus changes emphasis without dropping lines
+  ---
+  duration_ms: 1.5763
+  type: 'test'
+  ...
+# Subtest: large maxima use concise axis labels without clipping finite points
+ok 101 - large maxima use concise axis labels without clipping finite points
+  ---
+  duration_ms: 1.1958
+  type: 'test'
+  ...
+# Subtest: all cohort points remain, with endpoint values and true-point leaders only when focused at height 230
+ok 102 - all cohort points remain, with endpoint values and true-point leaders only when focused at height 230
+  ---
+  duration_ms: 6.0284
+  type: 'test'
+  ...
+# Subtest: all cohort points remain, with endpoint values and true-point leaders only when focused at height 190
+ok 103 - all cohort points remain, with endpoint values and true-point leaders only when focused at height 190
+  ---
+  duration_ms: 6.2173
+  type: 'test'
+  ...
+# Subtest: all cohort points remain, with endpoint values and true-point leaders only when focused at height 170
+ok 104 - all cohort points remain, with endpoint values and true-point leaders only when focused at height 170
+  ---
+  duration_ms: 7.8026
+  type: 'test'
+  ...
+# Subtest: focused value callout keeps its real value and a short leader to the true endpoint
+ok 105 - focused value callout keeps its real value and a short leader to the true endpoint
+  ---
+  duration_ms: 1.1727
+  type: 'test'
+  ...
+# Subtest: compact white charts retain a solid selected pie and readable axes with outlined white-core points
+ok 106 - compact white charts retain a solid selected pie and readable axes with outlined white-core points
+  ---
+  duration_ms: 2.3204
+  type: 'test'
+  ...
+# Subtest: individual archive chart uses the same orange stroke, neutral axes and white-core markers
+ok 107 - individual archive chart uses the same orange stroke, neutral axes and white-core markers
+  ---
+  duration_ms: 2.8081
+  type: 'test'
+  ...
+# Subtest: category-pie: property change invalidates export before its next draw tick
+ok 108 - category-pie: property change invalidates export before its next draw tick
+  ---
+  duration_ms: 1.5729
+  type: 'test'
+  ...
+# Subtest: category-pie: detached callbacks and stale image errors cannot publish or clear a newer frame
+ok 109 - category-pie: detached callbacks and stale image errors cannot publish or clear a newer frame
+  ---
+  duration_ms: 1.1822
+  type: 'test'
+  ...
+# Subtest: category-pie: failed export and missing canvas end loading with readable fallback
+ok 110 - category-pie: failed export and missing canvas end loading with readable fallback
+  ---
+  duration_ms: 1.8522
+  type: 'test'
+  ...
+# Subtest: category-pie: clear-to-empty prevents a former nonempty export reappearing
+ok 111 - category-pie: clear-to-empty prevents a former nonempty export reappearing
+  ---
+  duration_ms: 1.0382
+  type: 'test'
+  ...
+# Subtest: category-pie: only last scheduled resize query exports a frame
+ok 112 - category-pie: only last scheduled resize query exports a frame
+  ---
+  duration_ms: 0.8954
+  type: 'test'
+  ...
+# Subtest: group-lines: property change invalidates export before its next draw tick
+ok 113 - group-lines: property change invalidates export before its next draw tick
+  ---
+  duration_ms: 0.9704
+  type: 'test'
+  ...
+# Subtest: group-lines: detached callbacks and stale image errors cannot publish or clear a newer frame
+ok 114 - group-lines: detached callbacks and stale image errors cannot publish or clear a newer frame
+  ---
+  duration_ms: 0.8434
+  type: 'test'
+  ...
+# Subtest: group-lines: failed export and missing canvas end loading with readable fallback
+ok 115 - group-lines: failed export and missing canvas end loading with readable fallback
+  ---
+  duration_ms: 1.3241
+  type: 'test'
+  ...
+# Subtest: group-lines: clear-to-empty prevents a former nonempty export reappearing
+ok 116 - group-lines: clear-to-empty prevents a former nonempty export reappearing
+  ---
+  duration_ms: 1.4227
+  type: 'test'
+  ...
+# Subtest: group-lines: only last scheduled resize query exports a frame
+ok 117 - group-lines: only last scheduled resize query exports a frame
+  ---
+  duration_ms: 0.8216
+  type: 'test'
+  ...
+# Subtest: native starts one archive with ten labeled examples, without exposing a space switch
+ok 118 - native starts one archive with ten labeled examples, without exposing a space switch
+  ---
+  duration_ms: 25.6536
+  type: 'test'
+  ...
+# Subtest: new student requires name and grade, defaults to English without subject input, and is not an example
+ok 119 - new student requires name and grade, defaults to English without subject input, and is not an example
+  ---
+  duration_ms: 6.1465
+  type: 'test'
+  ...
+# Subtest: hidden legacy class survives editing; className is not a writable native form field
+ok 120 - hidden legacy class survives editing; className is not a writable native form field
+  ---
+  duration_ms: 3.5375
+  type: 'test'
+  ...
+# Subtest: write failure preserves old database and editable draft; retry adds exactly one record
+ok 121 - write failure preserves old database and editable draft; retry adds exactly one record
+  ---
+  duration_ms: 7.1812
+  type: 'test'
+  ...
+# Subtest: blank numbers and impossible dates are rejected while the draft stays editable
+ok 122 - blank numbers and impossible dates are rejected while the draft stays editable
+  ---
+  duration_ms: 5.8765
+  type: 'test'
+  ...
+# Subtest: draft context overrides forged ids and external disk changes block stale edits
+ok 123 - draft context overrides forged ids and external disk changes block stale edits
+  ---
+  duration_ms: 5.407
+  type: 'test'
+  ...
+# Subtest: record edit and delete handlers cannot target a different archive
+ok 124 - record edit and delete handlers cannot target a different archive
+  ---
+  duration_ms: 6.7743
+  type: 'test'
+  ...
+# Subtest: same-archive tag conflict remains enforced when restoring a resolved weak tag
+ok 125 - same-archive tag conflict remains enforced when restoring a resolved weak tag
+  ---
+  duration_ms: 8.9388
+  type: 'test'
+  ...
+# Subtest: advice stays an editable draft, completion and reopening preserve its evidence and result
+ok 126 - advice stays an editable draft, completion and reopening preserve its evidence and result
+  ---
+  duration_ms: 7.0842
+  type: 'test'
+  ...
+# Subtest: cascade deletion requires confirmation, and a write failure leaves all associated data
+ok 127 - cascade deletion requires confirmation, and a write failure leaves all associated data
+  ---
+  duration_ms: 6.7228
+  type: 'test'
+  ...
+# Subtest: restore requires format check, replacement checkbox and confirmation; uses current revision
+ok 128 - restore requires format check, replacement checkbox and confirmation; uses current revision
+  ---
+  duration_ms: 5.3903
+  type: 'test'
+  ...
+# Subtest: invalid, swapped-after-check or failed-write import does not replace the saved archive
+ok 129 - invalid, swapped-after-check or failed-write import does not replace the saved archive
+  ---
+  duration_ms: 3.125
+  type: 'test'
+  ...
+# Subtest: pending destructive confirmations cannot overwrite an externally changed archive
+ok 130 - pending destructive confirmations cannot overwrite an externally changed archive
+  ---
+  duration_ms: 6.1788
+  type: 'test'
+  ...
+# Subtest: clipboard export is explicit and failed copying never claims success
+ok 131 - clipboard export is explicit and failed copying never claims success
+  ---
+  duration_ms: 2.8664
+  type: 'test'
+  ...
+# Subtest: canceling a dirty form keeps its values and archive unchanged
+ok 132 - canceling a dirty form keeps its values and archive unchanged
+  ---
+  duration_ms: 2.4358
+  type: 'test'
+  ...
+# Subtest: opening help or failing navigation preserves an unsaved draft and does not copy records
+ok 133 - opening help or failing navigation preserves an unsaved draft and does not copy records
+  ---
+  duration_ms: 3.4701
+  type: 'test'
+  ...
+# Subtest: changing an archive subject cannot silently rewrite existing score subjects
+ok 134 - changing an archive subject cannot silently rewrite existing score subjects
+  ---
+  duration_ms: 3.4282
+  type: 'test'
+  ...
+# Subtest: a valid empty legacy personal archive never receives the ten examples
+ok 135 - a valid empty legacy personal archive never receives the ten examples
+  ---
+  duration_ms: 12.1028
+  type: 'test'
+  ...
+# Subtest: corrupt legacy personal remains blocked instead of falling back to old demo or new examples
+ok 136 - corrupt legacy personal remains blocked instead of falling back to old demo or new examples
+  ---
+  duration_ms: 2.9851
+  type: 'test'
+  ...
+# Subtest: corrupt new archive takes precedence over a valid legacy personal archive
+ok 137 - corrupt new archive takes precedence over a valid legacy personal archive
+  ---
+  duration_ms: 2.8372
+  type: 'test'
+  ...
+# Subtest: existing empty new archive remains authoritative and is not reseeded on reload
+ok 138 - existing empty new archive remains authoritative and is not reseeded on reload
+  ---
+  duration_ms: 3.5369
+  type: 'test'
+  ...
+# Subtest: initial infoFailure blocks without silently generating data
+ok 139 - initial infoFailure blocks without silently generating data
+  ---
+  duration_ms: 2.303
+  type: 'test'
+  ...
+# Subtest: initial readFailure blocks without silently generating data
+ok 140 - initial readFailure blocks without silently generating data
+  ---
+  duration_ms: 2.5087
+  type: 'test'
+  ...
+# Subtest: initial example creation failure never exposes unsaved example records
+ok 141 - initial example creation failure never exposes unsaved example records
+  ---
+  duration_ms: 5.6215
+  type: 'test'
+  ...
+# Subtest: first legacy edit migration writes only after success and preserves original legacy keys
+ok 142 - first legacy edit migration writes only after success and preserves original legacy keys
+  ---
+  duration_ms: 7.4632
+  type: 'test'
+  ...
+# Subtest: external legacy edit before the first save stops stale migration
+ok 143 - external legacy edit before the first save stops stale migration
+  ---
+  duration_ms: 4.6977
+  type: 'test'
+  ...
+# Subtest: deleting all ten examples persists an empty archive and restart does not reseed
+ok 144 - deleting all ten examples persists an empty archive and restart does not reseed
+  ---
+  duration_ms: 37.0211
+  type: 'test'
+  ...
+# Subtest: old demo only is preserved, never merged, and requires explicit confirmation to export
+ok 145 - old demo only is preserved, never merged, and requires explicit confirmation to export
+  ---
+  duration_ms: 4.8472
+  type: 'test'
+  ...
+# Subtest: corrupt new archive allows explicit raw backup and replacement without touching old personal
+ok 146 - corrupt new archive allows explicit raw backup and replacement without touching old personal
+  ---
+  duration_ms: 2.9169
+  type: 'test'
+  ...
+# Subtest: reload read failure retains current database and actionable editable draft
+ok 147 - reload read failure retains current database and actionable editable draft
+  ---
+  duration_ms: 2.7619
+  type: 'test'
+  ...
+# Subtest: oversized but valid restore retains old archive, checked backup and replacement text
+ok 148 - oversized but valid restore retains old archive, checked backup and replacement text
+  ---
+  duration_ms: 22.6588
+  type: 'test'
+  ...
+# Subtest: v1 migration is deterministic, nonmutating and preserves every canonical record and revision
+ok 149 - v1 migration is deterministic, nonmutating and preserves every canonical record and revision
+  ---
+  duration_ms: 3.4308
+  type: 'test'
+  ...
+# Subtest: v1 migration never silently fixes damaged records, dangling ownership, conflicts or unsupported versions
+ok 150 - v1 migration never silently fixes damaged records, dangling ownership, conflicts or unsupported versions
+  ---
+  duration_ms: 0.799
+  type: 'test'
+  ...
+# Subtest: export always emits v4, roundtrips subjects and legacy evidence without inferring new data
+ok 151 - export always emits v4, roundtrips subjects and legacy evidence without inferring new data
+  ---
+  duration_ms: 1.2247
+  type: 'test'
+  ...
+# Subtest: record subject defaults to empty for an unclassified owner and is validated as a bounded string
+ok 152 - record subject defaults to empty for an unclassified owner and is validated as a bounded string
+  ---
+  duration_ms: 0.7892
+  type: 'test'
+  ...
+# Subtest: old UI edits missing subject retain it; explicit empty clears it and invalid edits are atomic
+ok 153 - old UI edits missing subject retain it; explicit empty clears it and invalid edits are atomic
+  ---
+  duration_ms: 0.3948
+  type: 'test'
+  ...
+# Subtest: new subject validation does not execute accessor data or propagate pollution fields
+ok 154 - new subject validation does not execute accessor data or propagate pollution fields
+  ---
+  duration_ms: 0.2204
+  type: 'test'
+  ...
+# Subtest: same labels can coexist across subjects, but normalized same-subject duplicates/conflicts cannot
+ok 155 - same labels can coexist across subjects, but normalized same-subject duplicates/conflicts cannot
+  ---
+  duration_ms: 0.4296
+  type: 'test'
+  ...
+# Subtest: moving or clearing a subject checks the destination conflict before publishing any update
+ok 156 - moving or clearing a subject checks the destination conflict before publishing any update
+  ---
+  duration_ms: 0.415
+  type: 'test'
+  ...
+# Subtest: same subject/label remains independent by student and import enforces the same conflict rules
+ok 157 - same subject/label remains independent by student and import enforces the same conflict rules
+  ---
+  duration_ms: 0.4389
+  type: 'test'
+  ...
+# Subtest: score advice groups each named subject separately and uses only that subject in rates/evidence
+ok 158 - score advice groups each named subject separately and uses only that subject in rates/evidence
+  ---
+  duration_ms: 0.6808
+  type: 'test'
+  ...
+# Subtest: unknown subject is not a comparable group; only its latest single record is used
+ok 159 - unknown subject is not a comparable group; only its latest single record is used
+  ---
+  duration_ms: 0.3115
+  type: 'test'
+  ...
+# Subtest: normalization groups subject case/width variants without merging different semantic aliases
+ok 160 - normalization groups subject case/width variants without merging different semantic aliases
+  ---
+  duration_ms: 0.3166
+  type: 'test'
+  ...
+# Subtest: score advice remains bounded by recent subjects and excludes future/other-student data
+ok 161 - score advice remains bounded by recent subjects and excludes future/other-student data
+  ---
+  duration_ms: 0.6506
+  type: 'test'
+  ...
+# Subtest: Chinese/history observations containing 过去 do not trigger English tense instructions
+ok 162 - Chinese/history observations containing 过去 do not trigger English tense instructions
+  ---
+  duration_ms: 1.3106
+  type: 'test'
+  ...
+# Subtest: explicit English tags retain the earlier useful tense action
+ok 163 - explicit English tags retain the earlier useful tense action
+  ---
+  duration_ms: 0.398
+  type: 'test'
+  ...
+# Subtest: empty-subject tags, including migrated v1 records, never assume English from a label
+ok 164 - empty-subject tags, including migrated v1 records, never assume English from a label
+  ---
+  duration_ms: 0.5104
+  type: 'test'
+  ...
+# Subtest: math actions cover practical common topics with subject gating instead of language exercises
+ok 165 - math actions cover practical common topics with subject gating instead of language exercises
+  ---
+  duration_ms: 0.7389
+  type: 'test'
+  ...
+# Subtest: subject-marked suggestions save independent plan evidence without adding a plan subject field
+ok 166 - subject-marked suggestions save independent plan evidence without adding a plan subject field
+  ---
+  duration_ms: 0.3696
+  type: 'test'
+  ...
+# Subtest: maximum-length subject/tag/evidence still generate saveable suggestions
+ok 167 - maximum-length subject/tag/evidence still generate saveable suggestions
+  ---
+  duration_ms: 0.3614
+  type: 'test'
+  ...
+# Subtest: fresh demo exposes English teaching archives without changing the empty database fallback
+ok 168 - fresh demo exposes English teaching archives without changing the empty database fallback
+  ---
+  duration_ms: 1.7231
+  type: 'test'
+  ...
+1..168
+# tests 168
+# suites 0
+# pass 168
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 412.5952

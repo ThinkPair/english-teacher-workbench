@@ -1,0 +1,26 @@
+﻿{
+  "description": "学员手记：单老师、单设备的本地学员档案",
+  "miniprogramRoot": "./",
+  "compileType": "miniprogram",
+  "appid": "touristappid",
+  "projectname": "student-notebook-lite",
+  "setting": {
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true,
+    "urlCheck": true
+  },
+  "packOptions": {
+    "ignore": [
+      {
+        "type": "folder",
+        "value": "dev-tests"
+      },
+      {
+        "type": "file",
+        "value": "native-help.md"
+      }
+    ]
+  }
+}
